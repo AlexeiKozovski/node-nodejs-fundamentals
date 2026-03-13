@@ -10,4 +10,5 @@ export const workspaceRestoredPath = path.join(projectRootPath, 'workspace_resto
 export const snapshotPath = path.join(workspacePath, 'snapshot.json');
 export const partsPath = path.join(workspacePath, 'parts');
 export const mergedFilePath = path.join(workspacePath, 'merged.txt');
+export const checksumsFilePath = path.join(workspacePath, 'checksums.json');
 
