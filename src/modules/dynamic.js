@@ -1,9 +1,29 @@
+import {PLUGIN_ERROR_MESSAGE} from "../shared/error.js";
+
 const dynamic = async () => {
-  // Write your code here
-  // Accept plugin name as CLI argument
-  // Dynamically import plugin from plugins/ directory
-  // Call run() function and print result
-  // Handle missing plugin case
+  const [, , pluginName] = process.argv;
+
+  if (!pluginName) {
+    console.log(PLUGIN_ERROR_MESSAGE);
+    process.exitCode = 1;
+    return;
+  }
+
+  try {
+    const pluginModule = await import(`./plugins/${pluginName}.js`);
+
+    if (typeof pluginModule.run !== 'function') {
+      console.log(PLUGIN_ERROR_MESSAGE);
+      process.exitCode = 1;
+      return;
+    }
+
+    const result = await pluginModule.run();
+    console.log(result);
+  } catch {
+    console.log(PLUGIN_ERROR_MESSAGE);
+    process.exitCode = 1;
+  }
 };
 
 await dynamic();
